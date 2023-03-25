@@ -11,7 +11,7 @@ class MinThread extends Thread {
     private int[] array;
     private int minValue = Integer.MAX_VALUE;
 
-    public MinThread(int[] array) {
+    MinThread(int[] array) {
         this.array = array;
     }
 

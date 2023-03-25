@@ -23,6 +23,5 @@ class App {
         }
         return Map.of("min", minThread.getMinValue(), "max", maxThread.getMaxValue());
     }
-    
     // END
 }
