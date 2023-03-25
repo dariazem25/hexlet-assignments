@@ -18,6 +18,7 @@ class App {
         LOGGER.info("Thread " + minThread.getName() + " started");
         try {
             maxThread.join();
+            minThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
