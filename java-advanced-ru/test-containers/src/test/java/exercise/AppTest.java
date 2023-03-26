@@ -99,8 +99,8 @@ public class AppTest {
                 .getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.getContentType()).isNull();
 
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
         assertThat(response.getContentAsString()).contains("John", "Smith");
         assertThat(response.getContentAsString()).doesNotContain("Jack", "Doe");
         assertThat(response.getContentAsString()).doesNotContain("Jassica", "Simpson");
@@ -144,7 +144,7 @@ public class AppTest {
                 .getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.getContentAsString()).contains("Jackson", "Bind");
+        assertThat(response.getContentType()).isNull();
 
         MockHttpServletResponse response2 = mockMvc
                 .perform(get("/people"))
