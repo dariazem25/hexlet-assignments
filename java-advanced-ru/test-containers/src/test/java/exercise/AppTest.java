@@ -40,7 +40,7 @@ public class AppTest {
             .withDatabaseName("dbname")
             .withUsername("sa")
             .withPassword("sa")
-            .withInitScript("src/test/resources/init.sql");
+            .withInitScript("init.sql");
 
     @DynamicPropertySource
     public static void properties(DynamicPropertyRegistry registry) {
