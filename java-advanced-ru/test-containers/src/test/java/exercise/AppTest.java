@@ -117,11 +117,19 @@ public class AppTest {
 
         assertThat(response.getStatus()).isEqualTo(200);
 
-        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
-        assertThat(response.getContentAsString()).doesNotContain("John", "Smith");
-        assertThat(response.getContentAsString()).contains("Jack", "Doe");
-        assertThat(response.getContentAsString()).contains("Jassica", "Simpson");
-        assertThat(response.getContentAsString()).contains("Robert", "Lock");
+        assertThat(response.getContentType()).isEmpty();
+
+        MockHttpServletResponse response2 = mockMvc
+                .perform(get("/people"))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response2.getStatus()).isEqualTo(200);
+        assertThat(response2.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
+        assertThat(response2.getContentAsString()).doesNotContain("John", "Smith");
+        assertThat(response2.getContentAsString()).contains("Jack", "Doe");
+        assertThat(response2.getContentAsString()).contains("Jassica", "Simpson");
+        assertThat(response2.getContentAsString()).contains("Robert", "Lock");
     }
 
     @Test
@@ -130,12 +138,26 @@ public class AppTest {
                 .perform(
                         patch("/people/1")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"firstName\": \"Jackson\"}")
+                                .content("{\"firstName\": \"Jackson\", \"lastName\": \"Bind\"}")
                 )
                 .andReturn()
                 .getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.getContentAsString()).contains("Jackson", "Smith");
+        assertThat(response.getContentAsString()).contains("Jackson", "Bind");
+
+        MockHttpServletResponse response2 = mockMvc
+                .perform(get("/people"))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response2.getStatus()).isEqualTo(200);
+        assertThat(response2.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
+        assertThat(response2.getContentAsString()).doesNotContain("John", "Smith");
+        assertThat(response2.getContentAsString()).contains("Jackson", "Bind");
+        assertThat(response2.getContentAsString()).contains("Jack", "Doe");
+        assertThat(response2.getContentAsString()).contains("Jassica", "Simpson");
+        assertThat(response2.getContentAsString()).contains("Robert", "Lock");
+
     }
 }
